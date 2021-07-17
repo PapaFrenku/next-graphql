@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Button } from '../components/Button';
+import { Search } from '../components/Search';
 import styles from '../styles/Home.module.scss';
 
 export default function Home():JSX.Element {
@@ -20,6 +21,7 @@ export default function Home():JSX.Element {
         >
           <span>Кнопка</span>
         </Button>
+        <Search />
       </main>
 
       <footer className={styles.footer}>
