@@ -1,10 +1,11 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import { Button } from '../components/Button';
-import { Search } from '../components/Search';
-import styles from '../styles/Home.module.scss';
+import Head from "next/head";
+import Image from "next/image";
+import { Button } from "../components/Button";
+import { Card } from "../components/Card";
+import { Search } from "../components/Search";
+import styles from "../styles/Home.module.scss";
 
-export default function Home():JSX.Element {
+export default function Home(): JSX.Element {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,14 +15,22 @@ export default function Home():JSX.Element {
       </Head>
 
       <main className={styles.main}>
-        <Button 
-          arrow='down'
-          appearance='primary'
-          fullWidth
-        >
+        <Button arrow="down" appearance="primary" fullWidth>
           <span>Кнопка</span>
         </Button>
         <Search />
+
+        <Card
+          color="blue"
+          cardContent={<p>Card 1</p>}
+          actionButtons={[
+            <Button appearance='ghost' fullWidth>
+              <span>Кнопка</span>
+            </Button>,
+          ]}
+        />
+
+        <Card cardContent={<p>Card 1</p>} color="white" />
       </main>
 
       <footer className={styles.footer}>
@@ -30,7 +39,7 @@ export default function Home():JSX.Element {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
