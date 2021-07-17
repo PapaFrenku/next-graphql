@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Search } from "../components/Search";
+import { Textarea } from "../components/Textarea";
 import styles from "../styles/Home.module.scss";
 
 export default function Home(): JSX.Element {
@@ -31,6 +32,7 @@ export default function Home(): JSX.Element {
         />
 
         <Card cardContent={<p>Card 1</p>} color="white" />
+        <Textarea />
       </main>
 
       <footer className={styles.footer}>
