@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Search } from "../components/Search";
+import { Tag } from "../components/Tag";
 import { Textarea } from "../components/Textarea";
 import styles from "../styles/Home.module.scss";
 
@@ -33,6 +34,9 @@ export default function Home(): JSX.Element {
 
         <Card cardContent={<p>Card 1</p>} color="white" />
         <Textarea />
+        <Tag size='m' color='primary' href=''>
+          <span>Tag 1</span>
+        </Tag>
       </main>
 
       <footer className={styles.footer}>
