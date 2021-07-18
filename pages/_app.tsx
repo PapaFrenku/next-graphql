@@ -5,7 +5,7 @@ import { useApollo } from '../lib/apolloClient';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = useApollo(pageProps, {
-    uri: process.env.HOST,
+    uri: 'http://localhost:3000/graphql',
     credentials: 'same-origin'
   });
 

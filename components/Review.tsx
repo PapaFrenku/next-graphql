@@ -6,9 +6,10 @@ import { ru } from "date-fns/locale";
 import { Rating } from "./Rating";
 import { ReactSVG } from "react-svg";
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { Review as ReviewType } from '../generated/types';
 
 export interface ReviewProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-	review: any;
+	review: ReviewType;
 }
 
 export const Review = ({

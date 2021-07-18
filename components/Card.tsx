@@ -6,7 +6,6 @@ import { ForwardedRef, forwardRef } from "react";
 export interface CardProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   color?: "white" | "blue";
-  cardContent: ReactNode;
   actionButtons?: ReactNode[];
 }
 
@@ -14,7 +13,7 @@ export const Card = forwardRef(
   (
     {
       color = "white",
-      cardContent,
+      children,
       actionButtons = [],
       className,
       ...props
@@ -29,7 +28,7 @@ export const Card = forwardRef(
         ref={ref}
         {...props}
       >
-        <div className={styles.cardContent}>{cardContent}</div>
+        {children}
         {actionButtons.length ? (
           <div className={styles.cardActions}>
             {actionButtons.map((item) => (

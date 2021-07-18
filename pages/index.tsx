@@ -1,17 +1,67 @@
+import { gql, useQuery } from "@apollo/client";
+import _ from "lodash";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
+import { Product } from "../components/Product";
 import { Rating } from "../components/Rating";
 import { Review } from "../components/Review";
 import { ReviewForm } from "../components/ReviewForm";
 import { Search } from "../components/Search";
 import { Tag } from "../components/Tag";
 import { Textarea } from "../components/Textarea";
+import { Product as ProductType } from "../generated/types";
 import styles from "../styles/Home.module.scss";
 
+export const ALL_PRODUCTS_QUERY = gql`
+  query products {
+    products(findAllProductDto: {}) {
+      id
+      image
+      title
+      link
+      initialRating
+      price
+      oldPrice
+      credit
+      description
+      advantages
+      disAdvantages
+      categories
+      tags
+      characteristics {
+        id
+        name
+        value
+        productId
+      }
+      createdAt
+      updatedAt
+      reviewAvg
+      reviews {
+        id
+        title
+        name
+        description
+        rating
+        productId
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+
 export default function Home(): JSX.Element {
+  const { loading, error, data, fetchMore, networkStatus } = useQuery<
+    {products: ProductType[]}
+  >(ALL_PRODUCTS_QUERY, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  console.log(data);
   return (
     <div className={styles.container}>
       <Head>
@@ -26,32 +76,14 @@ export default function Home(): JSX.Element {
         </Button>
         <Search />
 
-        <Card
-          color="blue"
-          cardContent={<p>Card 1</p>}
-          actionButtons={[
-            <Button appearance="ghost" fullWidth>
-              <span>Кнопка</span>
-            </Button>,
-          ]}
-        />
-
-        <Card cardContent={<p>Card 1</p>} color="white" />
         <Textarea />
         <Tag size="m" color="primary" href="">
           <span>Tag 1</span>
         </Tag>
         <Rating isEditable rating={2} />
         <ReviewForm isOpened productId={1} />
-        <Review
-          review={{
-            name: "string",
-            title: "string",
-            description: "string",
-            rating: 3,
-            createdAt: new Date(),
-          }}
-        />
+        {data &&
+          data.products.map((item) => <Product product={_.omit(item, "__typename")} />)}
       </main>
 
       <footer className={styles.footer}>
