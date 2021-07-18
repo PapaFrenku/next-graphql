@@ -1,8 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
+import React from "react";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Rating } from "../components/Rating";
+import { Review } from "../components/Review";
 import { ReviewForm } from "../components/ReviewForm";
 import { Search } from "../components/Search";
 import { Tag } from "../components/Tag";
@@ -39,10 +41,16 @@ export default function Home(): JSX.Element {
         <Tag size="m" color="primary" href="">
           <span>Tag 1</span>
         </Tag>
-        <Rating isEditable rating={2}/>
-        <ReviewForm 
-          isOpened
-          productId={1}
+        <Rating isEditable rating={2} />
+        <ReviewForm isOpened productId={1} />
+        <Review
+          review={{
+            name: "string",
+            title: "string",
+            description: "string",
+            rating: 3,
+            createdAt: new Date(),
+          }}
         />
       </main>
 

@@ -4,14 +4,9 @@
 
 .star {
 	display: inline-block;
-    cursor: pointer;
 
     & svg {
         transition: .2s;
-
-        &:hover {
-            fill: var(--primary);
-        }
     }
 }
 
