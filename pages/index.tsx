@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
+import { Rating } from "../components/Rating";
+import { ReviewForm } from "../components/ReviewForm";
 import { Search } from "../components/Search";
 import { Tag } from "../components/Tag";
 import { Textarea } from "../components/Textarea";
@@ -26,7 +28,7 @@ export default function Home(): JSX.Element {
           color="blue"
           cardContent={<p>Card 1</p>}
           actionButtons={[
-            <Button appearance='ghost' fullWidth>
+            <Button appearance="ghost" fullWidth>
               <span>Кнопка</span>
             </Button>,
           ]}
@@ -34,9 +36,14 @@ export default function Home(): JSX.Element {
 
         <Card cardContent={<p>Card 1</p>} color="white" />
         <Textarea />
-        <Tag size='m' color='primary' href=''>
+        <Tag size="m" color="primary" href="">
           <span>Tag 1</span>
         </Tag>
+        <Rating isEditable rating={2}/>
+        <ReviewForm 
+          isOpened
+          productId={1}
+        />
       </main>
 
       <footer className={styles.footer}>
