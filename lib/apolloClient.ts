@@ -1,19 +1,42 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
+import { ApolloClient, HttpLink, HttpOptions, InMemoryCache, NormalizedCacheObject, split } from '@apollo/client';
+import { concatPagination, getMainDefinition } from '@apollo/client/utilities';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
+import { WebSocketLink } from 'apollo-link-ws';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
+
+const wsLink:any = process.browser ? new WebSocketLink({ // if you instantiate in the server, the error will be thrown
+  uri: `ws://localhost:3000/subscriptions`,
+  options: {
+    reconnect: true,
+    timeout: 5000,
+  }
+}) : null;
+
+const httplink = new HttpLink({
+	uri: 'http://localhost:3000/graphql',
+	credentials: 'same-origin'
+});
+
+const link = process.browser ? split( //only create the split in the browser
+  // split based on operation type
+  ({ query }) => {
+    const { kind, operation }:any = getMainDefinition(query);
+    console.log(operation);
+    return kind === 'OperationDefinition' && operation === 'subscription';
+  },
+  wsLink,
+  httplink,
+) : httplink;
 
 let apolloClient:ApolloClient<NormalizedCacheObject>;
 
 function createApolloClient(options: HttpOptions) {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: new HttpLink({
-      ...options
-    }),
+    link: link,
     cache: new InMemoryCache({
       typePolicies: {
         Query: {

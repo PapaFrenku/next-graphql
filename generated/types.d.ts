@@ -88,7 +88,7 @@ export type Mutation = {
   createProduct: Product;
   deleteProduct: Product;
   updateProduct: Product;
-  postReview: Review;
+  postReview: Product;
   createTopPage: TopPageEntity;
   deleteTopPage: TopPageEntity;
   updateTopPage: TopPageEntity;
@@ -161,7 +161,7 @@ export type Product = {
   credit: Scalars['Int'];
   description?: Maybe<Scalars['String']>;
   advantages: Array<Maybe<Scalars['String']>>;
-  disAdvantages?: Maybe<Scalars['String']>;
+  disAdvantages: Array<Maybe<Scalars['String']>>;
   categories: Array<Maybe<Scalars['String']>>;
   tags: Array<Maybe<Scalars['String']>>;
   characteristics?: Maybe<Array<Maybe<ProductCharacteristic>>>;
@@ -243,6 +243,11 @@ export type Review = {
   product: Product;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  reviewAdded: Product;
 };
 
 export enum TopLevelCategory {

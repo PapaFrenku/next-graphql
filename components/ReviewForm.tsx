@@ -9,6 +9,15 @@ import { Button } from "./Button";
 import { ReactSVG } from "react-svg";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+
+export const POST_REVIEW_MUTATION = gql`
+  mutation postReview($postReviewDto: PostRevieDto!) {
+    postReview(postReviewDto: $postReviewDto) {
+      id
+    }
+  }
+`;
 
 export interface IReviewForm {
   name: string;
@@ -39,9 +48,18 @@ export const ReviewForm = ({
   } = useForm<IReviewForm>();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string>();
+  const [postReview, gqlRes] = useMutation<IReviewForm>(POST_REVIEW_MUTATION);
 
   const onSubmit = async (formData: IReviewForm) => {
-    console.log(formData);
+    postReview({
+      variables: {
+        postReviewDto: {
+          ...formData,
+          productId,
+        },
+      },
+    });
+    reset();
   };
 
   return (

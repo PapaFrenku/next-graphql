@@ -6,17 +6,35 @@ import { Tag } from "./Tag";
 import { Button } from "./Button";
 import { Divider } from "./Divider";
 import Image from "next/image";
-import { ForwardedRef, forwardRef, useRef, useState } from "react";
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from "react";
 import { Review } from "./Review";
 import { ReviewForm } from "./ReviewForm";
 import { motion } from "framer-motion";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { Product as ProductType } from "../generated/types";
+import { Product as ProductType, Review as ReviewType} from "../generated/types";
+import { gql, useSubscription } from "@apollo/client";
 
 export interface ProductProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   product: ProductType;
 }
+
+const REVIEW_SUBSCRIPTION = gql`
+  subscription OnReviewAdded($id: Float!) {
+    reviewAdded(id: $id) {
+      reviews {
+        id
+        title
+        name
+        description
+        rating
+        productId
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 
 export const declOfNum = (
   number: number,
@@ -44,6 +62,16 @@ export const Product = motion(
     ): JSX.Element => {
       const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
       const reviewRef = useRef<HTMLDivElement>(null);
+
+      const [reviews, setReviews] = useState<ReviewType[]>(product.reviews);
+
+      const { data, loading } = useSubscription<{reviewAdded: {reviews: ReviewType[]}}>(REVIEW_SUBSCRIPTION, {variables: {id: product.id}});
+
+      useEffect(() => {
+        if(data?.reviewAdded) {
+          setReviews(data.reviewAdded.reviews);
+        }
+      }, [data, loading]);
 
       const variants = {
         visible: { opacity: 1, height: "auto" },
@@ -111,8 +139,8 @@ export const Product = motion(
             </div>
             <div className={styles.rateTitle}>
               <a href="#ref" onClick={scrollToReview}>
-                {product.reviews.length}{" "}
-                {declOfNum(product.reviews.length, [
+                {reviews.length}{" "}
+                {declOfNum(reviews.length, [
                   "отзыв",
                   "отзыва",
                   "отзывов",
@@ -172,7 +200,7 @@ export const Product = motion(
               ref={reviewRef}
               tabIndex={isReviewOpened ? 0 : -1}
             >
-              {product.reviews.map((r: any) => (
+              {reviews.map((r: any) => (
                 <div key={r._id}>
                   <Review review={r} />
                   <Divider />
