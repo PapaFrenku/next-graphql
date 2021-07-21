@@ -15,6 +15,7 @@ import { Search } from "../components/Search";
 import { Sort, SortEnum } from "../components/Sort";
 import { Tag } from "../components/Tag";
 import { Textarea } from "../components/Textarea";
+import { Up } from "../components/Up";
 import { Product as ProductType } from "../generated/types";
 import styles from "../styles/Home.module.scss";
 
@@ -97,6 +98,7 @@ export default function Home(): JSX.Element {
           <Sort sort={SortEnum.Price} setSort={(sort) => {
             console.log(sort);
           }}/>
+          <Up />
       </main>
 
       <footer className={styles.footer}>
