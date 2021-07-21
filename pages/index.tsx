@@ -7,6 +7,7 @@ import { Advantages } from "../components/Advantages";
 import { Button } from "../components/Button";
 import { ButtonIcon } from "../components/ButtonIcon";
 import { Card } from "../components/Card";
+import { HhData } from "../components/HhData";
 import { Product } from "../components/Product";
 import { Rating } from "../components/Rating";
 import { Review } from "../components/Review";
@@ -99,6 +100,13 @@ export default function Home(): JSX.Element {
             console.log(sort);
           }}/>
           <Up />
+
+          <HhData 
+            count={100}
+            juniorSalary={100}
+            middleSalary={1000}
+            seniorSalary={10000}
+          />
       </main>
 
       <footer className={styles.footer}>

@@ -1,8 +1,8 @@
-import styles from '../styles/Sort.module.scss';
+import styles from "../styles/Sort.module.scss";
 import SortIcon from "../assets/images/sort.svg";
 import cn from "classnames";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { ReactSVG } from 'react-svg';
+import { ReactSVG } from "react-svg";
 
 export interface SortProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

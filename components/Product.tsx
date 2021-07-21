@@ -11,7 +11,10 @@ import { Review } from "./Review";
 import { ReviewForm } from "./ReviewForm";
 import { motion } from "framer-motion";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import { Product as ProductType, Review as ReviewType} from "../generated/types";
+import {
+  Product as ProductType,
+  Review as ReviewType,
+} from "../generated/types";
 import { gql, useSubscription } from "@apollo/client";
 
 export interface ProductProps
@@ -65,10 +68,12 @@ export const Product = motion(
 
       const [reviews, setReviews] = useState<ReviewType[]>(product.reviews);
 
-      const { data, loading } = useSubscription<{reviewAdded: {reviews: ReviewType[]}}>(REVIEW_SUBSCRIPTION, {variables: {id: product.id}});
+      const { data, loading } = useSubscription<{
+        reviewAdded: { reviews: ReviewType[] };
+      }>(REVIEW_SUBSCRIPTION, { variables: { id: product.id } });
 
       useEffect(() => {
-        if(data?.reviewAdded) {
+        if (data?.reviewAdded) {
           setReviews(data.reviewAdded.reviews);
         }
       }, [data, loading]);
@@ -140,11 +145,7 @@ export const Product = motion(
             <div className={styles.rateTitle}>
               <a href="#ref" onClick={scrollToReview}>
                 {reviews.length}{" "}
-                {declOfNum(reviews.length, [
-                  "отзыв",
-                  "отзыва",
-                  "отзывов",
-                ])}
+                {declOfNum(reviews.length, ["отзыв", "отзыва", "отзывов"])}
               </a>
             </div>
             <Divider className={styles.hr} />
