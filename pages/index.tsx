@@ -3,13 +3,16 @@ import _ from "lodash";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
+import { Advantages } from "../components/Advantages";
 import { Button } from "../components/Button";
+import { ButtonIcon } from "../components/ButtonIcon";
 import { Card } from "../components/Card";
 import { Product } from "../components/Product";
 import { Rating } from "../components/Rating";
 import { Review } from "../components/Review";
 import { ReviewForm } from "../components/ReviewForm";
 import { Search } from "../components/Search";
+import { Sort, SortEnum } from "../components/Sort";
 import { Tag } from "../components/Tag";
 import { Textarea } from "../components/Textarea";
 import { Product as ProductType } from "../generated/types";
@@ -71,7 +74,7 @@ export default function Home(): JSX.Element {
       </Head>
 
       <main className={styles.main}>
-        <Button arrow="down" appearance="primary" fullWidth>
+        {/* <Button arrow="down" appearance="primary" fullWidth>
           <span>Кнопка</span>
         </Button>
         <Search />
@@ -83,7 +86,17 @@ export default function Home(): JSX.Element {
         <Rating isEditable rating={2} />
         <ReviewForm isOpened productId={1} />
         {data &&
-          data.products.map((item) => <Product product={_.omit(item, "__typename")} />)}
+          data.products.map((item) => <Product product={_.omit(item, "__typename")} />)} */}
+          <ButtonIcon icon="up" appearance="primary" />
+          <ButtonIcon icon="up" appearance="white" />
+          <ButtonIcon icon="menu" appearance="primary" />
+          <ButtonIcon icon="menu" appearance="white" />
+          <ButtonIcon icon="close" appearance="primary" />
+          <ButtonIcon icon="close" appearance="white" />
+          <Advantages advantages={[{title: 'asdasd', description: 'asdsd'}]}/>
+          <Sort sort={SortEnum.Price} setSort={(sort) => {
+            console.log(sort);
+          }}/>
       </main>
 
       <footer className={styles.footer}>
