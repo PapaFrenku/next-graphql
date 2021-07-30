@@ -1,0 +1,109 @@
+.firstLevel {
+  display: grid;
+  align-items: center;
+
+  margin-top: 20px;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 25px;
+  grid-template-columns: 1fr 24px;
+  gap: 20px;
+  color: var(--primary);
+  & svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
+  & > div {
+    display: flex;
+
+    & a {
+      margin-left: 15px;
+    }
+  }
+}
+
+.firstLevelList {
+  padding: 0;
+
+  list-style: none;
+}
+
+.showMoreBtn {
+  a {
+    font-weight: 500;
+    color: var(--primary);
+	font-size: 14px;
+  }
+
+  &:hover {
+    a {
+      color: var(--primary-hover);
+    }
+  }
+}
+
+.firstLevelActive,
+.firstLevel:hover {
+  // color: var(--primary);
+}
+
+.firstLevelActive svg,
+.firstLevel:hover svg {
+  // fill: var(--primary);
+}
+
+.secondLevel {
+  margin-bottom: 10px;
+  padding: 0;
+
+  cursor: pointer;
+  text-transform: uppercase;
+
+  color: var(--gray-dark);
+  border: none;
+
+  background: none;
+
+  font-size: 12px;
+
+  font-weight: 300;
+}
+
+.secondBlock {
+  margin-top: 0px;
+  margin-left: 12px;
+  padding: 0 0 0 32px;
+
+  list-style: none;
+
+  border-left: 1px solid #dfdfdf;
+}
+
+.secondLevelBlock {
+  overflow: hidden;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+.thirdLevel {
+  display: block;
+
+  margin-bottom: 10px;
+
+  cursor: pointer;
+
+  color: var(--black);
+  outline-offset: -1px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.thirdLevelActive,
+.thirdLevel:hover {
+  color: var(--primary);
+}

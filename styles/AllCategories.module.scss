@@ -1,0 +1,56 @@
+.subCategory {
+    padding: 1.5rem;
+    display: grid;
+    grid-gap: 15px;
+    gap: 15px;
+    align-content: start;
+    & p {
+        margin: 0;
+    }
+
+    h2 {
+        margin-top: 0;
+    }
+
+    a {
+        display: block;
+    }
+}
+
+.cardList{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+    gap: 30px;
+}
+
+.head {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 60px 1fr;
+    grid-gap: 40px;
+    gap: 40px;
+}
+
+.pageTitle {
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 68px;
+}
+
+.icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    border-radius: 5px;
+    -moz-box-pack: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+    svg {
+        fill: #fff;
+        width: 39px;
+        height: 35px;
+    }
+}

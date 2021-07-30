@@ -24,7 +24,6 @@ const link = process.browser ? split( //only create the split in the browser
   // split based on operation type
   ({ query }) => {
     const { kind, operation }:any = getMainDefinition(query);
-    console.log(operation);
     return kind === 'OperationDefinition' && operation === 'subscription';
   },
   wsLink,
@@ -33,7 +32,7 @@ const link = process.browser ? split( //only create the split in the browser
 
 let apolloClient:ApolloClient<NormalizedCacheObject>;
 
-function createApolloClient(options: HttpOptions) {
+function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: link,
@@ -49,8 +48,8 @@ function createApolloClient(options: HttpOptions) {
   });
 }
 
-export function initializeApollo(initialState:any = null, options:HttpOptions) {
-  const _apolloClient = apolloClient ?? createApolloClient(options);
+export function initializeApollo(initialState:any = null) {
+  const _apolloClient = apolloClient ?? createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -88,8 +87,8 @@ export function addApolloState(client:any, pageProps:any) {
   return pageProps;
 }
 
-export function useApollo(pageProps:any, options:HttpOptions) {
+export function useApollo(pageProps:any) {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
-  const store = useMemo(() => initializeApollo(state, options), [state]);
+  const store = useMemo(() => initializeApollo(state), [state]);
   return store;
 }
