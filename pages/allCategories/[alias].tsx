@@ -22,6 +22,9 @@ import BooksIcon from "../../assets/images/books.svg";
 import { ReactSVG } from "react-svg";
 import { Htag } from "../../components/Htag";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import { findTopPageByCategory } from "../../redux/topPageSlice";
 
 export const FIND_TOP_PAGES_BY_CATEGORY = gql`
   query findByCategory($findTopPageDto: FindTopPageDto!) {
@@ -46,15 +49,24 @@ type TopPageType = Omit<TopPageEntity, "hh" | "advantages">;
 
 const Page: React.FC = (props) => {
   const router = useRouter();
-  console.log(props);
+  const dispatch = useDispatch<AppDispatch>();
+  const pages = useSelector((state: RootState) => state.topPage.pages);
 
   const firstCategory = useMemo(() => {
     const { alias } = router.query;
     if (typeof alias === "string") {
-      return alias.charAt(0).toUpperCase() + alias.slice(1);
+      const s: any = alias.charAt(0).toUpperCase() + alias.slice(1);
+      return s as TopLevelCategory;
     }
-    return "";
+    return null;
   }, [router.query]);
+
+  useEffect(() => {
+    if (firstCategory) {
+      console.log(firstCategory);
+      dispatch(findTopPageByCategory(firstCategory));
+    }
+  }, [firstCategory]);
 
   const headTitle = useMemo(() => {
     let title = "";
@@ -70,34 +82,34 @@ const Page: React.FC = (props) => {
         case TopLevelCategory.Books.toLowerCase():
           (title = "Сервисы"), (icon = BooksIcon);
       }
-      return <>
-        <div className={styles.icon}>
-          {<ReactSVG src={icon?.src}/>}
-        </div>
-        <h1 className={styles.pageTitle}>{title}</h1>
-      </>;
+      return (
+        <>
+          <div className={styles.icon}>{<ReactSVG src={icon?.src} />}</div>
+          <h1 className={styles.pageTitle}>{title}</h1>
+        </>
+      );
     }
     return null;
   }, [router.query]);
 
-  const { loading, error, data } = useQuery<{ findByCategory: TopPageType[] }>(
-    FIND_TOP_PAGES_BY_CATEGORY,
-    {
-      notifyOnNetworkStatusChange: true,
-      variables: {
-        findTopPageDto: {
-          firstCategory,
-        },
-      },
-    }
-  );
+  // const { loading, error, data } = useQuery<{ findByCategory: TopPageType[] }>(
+  //   FIND_TOP_PAGES_BY_CATEGORY,
+  //   {
+  //     notifyOnNetworkStatusChange: true,
+  //     variables: {
+  //       findTopPageDto: {
+  //         firstCategory,
+  //       },
+  //     },
+  //   }
+  // );
 
   const groupBySecondCategory = useMemo(() => {
-    if (data?.findByCategory) {
-      return _.groupBy<TopPageType>(data?.findByCategory, "secondCategory");
+    if (pages.length) {
+      return _.groupBy<TopPageType>(pages, "secondCategory");
     }
     return {};
-  }, [data?.findByCategory]);
+  }, [pages]);
 
   return (
     <div className={styles.container}>
@@ -107,16 +119,14 @@ const Page: React.FC = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.head}>
-          {headTitle}
-        </div>
+        <div className={styles.head}>{headTitle}</div>
         <div className={styles.cardList}>
           {Object.keys(groupBySecondCategory).map((item) => (
             <Card key={item}>
               <div className={styles.subCategory}>
                 <Htag tag="h2">{item}</Htag>
                 {groupBySecondCategory[item].map((item) => (
-                  <Link href={`/${item.alias}`}>{item.title}</Link>
+                  <Link key={item.alias} href={`/${item.alias}`}>{item.title}</Link>
                 ))}
               </div>
             </Card>
