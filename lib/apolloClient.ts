@@ -8,7 +8,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 const wsLink:any = process.browser ? new WebSocketLink({ // if you instantiate in the server, the error will be thrown
-  uri: `ws://localhost:3000/subscriptions`,
+  uri: `ws://nest-graphql-prisma.herokuapp.com/subscriptions`,
   options: {
     reconnect: true,
     timeout: 5000,
@@ -16,7 +16,7 @@ const wsLink:any = process.browser ? new WebSocketLink({ // if you instantiate i
 }) : null;
 
 const httplink = new HttpLink({
-	uri: 'http://localhost:3000/graphql',
+	uri: 'https://nest-graphql-prisma.herokuapp.com/graphql',
 	credentials: 'same-origin'
 });
 

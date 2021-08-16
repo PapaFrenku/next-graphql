@@ -1,21 +1,21 @@
 import styles from "../../styles/Menu.module.scss";
 import cn from "classnames";
-import React, { useContext, KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-// import { TopLevelCategory, TopPageEntity } from "../../generated/types";
 import CoursesIcon from "../../assets/images/courses.svg";
 import ServicesIcon from "../../assets/images/services.svg";
 import BooksIcon from "../../assets/images/books.svg";
 import { ReactSVG } from "react-svg";
-import { gql, useQuery } from "@apollo/client";
 import { groupBy } from "lodash";
-import { AppContext } from "../../context/app.context";
-import { useApollo } from "../../lib/apolloClient";
-import { TopPageEntity, TopLevelCategory } from "../../generated/types";
-import ArrowIcon from "../../assets/images/up.svg";
-import { Button } from "../Button";
+import { TopLevelCategory, TopPageEntity } from "../../generated/types";
+import ArrowIcon from "../../assets/images/arrow.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTopPages } from "../../redux/topPageSlice";
+import { RootState } from "../../redux/store";
+
+type TopPage = Omit<TopPageEntity, 'products'>;
 
 export const firstLevelMenu = [
   {
@@ -45,21 +45,8 @@ export interface PageItem {
   category: string;
 }
 
-export const ALL_TOP_PAGES = gql`
-  query getAllTopPages {
-    getAllTopPages {
-      id
-      firstCategory
-      secondCategory
-      alias
-      title
-      category
-    }
-  }
-`;
-
 const Accordion: React.FC<{
-  i: any;
+  i: string;
   expanded: any;
   setExpanded: (n: any) => void;
   title: string;
@@ -72,28 +59,28 @@ const Accordion: React.FC<{
   // them in and out while also only rendering the contents of open accordions
   return (
     <>
-      <motion.header
+      <motion.div
         initial={false}
         onClick={() => setExpanded(isOpen ? false : i)}
       >
         <div
           className={cn(styles.firstLevel, {
-            [styles.firstLevelActive]: true,
+            [styles.firstLevelActive]: i === expanded,
           })}
         >
           <div>
             {icon}
-            <Link href={`/allCategories/${i}`}>{title}</Link>
+            <Link href={`/allCategories/${i.toLowerCase()}`}>{title}</Link>
           </div>
           <motion.div
             initial={false}
-            animate={{ transform: isOpen ? "rotate(0deg)" : "rotate(180deg)" }}
+            animate={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
             transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <ReactSVG src={ArrowIcon.src} />
           </motion.div>
         </div>
-      </motion.header>
+      </motion.div>
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.section
@@ -121,15 +108,15 @@ const Accordion: React.FC<{
 };
 
 export const Menu: React.FC<{ menu?: any }> = (props): JSX.Element => {
-  const { loading, error, data } = useQuery<{
-    getAllTopPages: any[];
-  }>(ALL_TOP_PAGES, {
-    notifyOnNetworkStatusChange: true,
-  });
-  const allTopPages = data?.getAllTopPages || [];
-  const menu = groupBy(allTopPages, "firstCategory");
+  const dispatch = useDispatch();
+  const menuTopPages = useSelector((state: RootState) => state.topPage.menuTopPages); 
+  
+  useEffect(() => {
+    dispatch(getAllTopPages());
+  }, []);
 
-  const [announce, setAnnounce] = useState<"closed" | "opened" | undefined>();
+  const menu = groupBy(menuTopPages, "firstCategory");
+  
   const [firstСategories, setFirstСategories] = useState<TopLevelCategory[]>([
     TopLevelCategory.Courses,
   ]);
@@ -201,16 +188,11 @@ export const Menu: React.FC<{ menu?: any }> = (props): JSX.Element => {
           {secondCategories.map((m) => {
             return (
               <li key={m}>
-                <button
-                  onKeyDown={(key: KeyboardEvent) => openSecondLevelKey(key, m)}
+                <span
                   className={styles.secondLevel}
-                  onClick={() => {
-                    console.log("a");
-                  }}
-                  // aria-expanded={m.isOpened}
                 >
                   {m}
-                </button>
+                </span>
                 <ul className={styles.secondLevelBlock}>
                   {buildThirdLevel(
                     bySecondCategory[m],
@@ -232,21 +214,21 @@ export const Menu: React.FC<{ menu?: any }> = (props): JSX.Element => {
   };
 
   const buildThirdLevel = (
-    pages: TopPageEntity[],
+    pages: TopPage[],
     route: string,
     isOpened: boolean
   ) => {
     return pages.map((p) => (
       <li key={p.id}>
-        <Link href={`/${route}/${p.alias}`}>
+        <Link href={`/topPages/${p.alias}`}>
           <a
             tabIndex={isOpened ? 0 : -1}
             className={cn(styles.thirdLevel, {
               [styles.thirdLevelActive]:
-                `/${route}/${p.alias}` == router.asPath,
+                `/topPages/${p.alias}` == router.asPath,
             })}
             aria-current={
-              `/${route}/${p.alias}` == router.asPath ? "page" : false
+              `/topPages/${p.alias}` == router.asPath ? "page" : false
             }
           >
             {p.category}

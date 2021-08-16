@@ -93,12 +93,12 @@ export const Product = motion(
       };
 
       return (
-        <div className={className} {...props} ref={ref}>
+        <div {...props} style={{overflow: "hidden"}} className={className} ref={ref}>
           <Card className={styles.product}>
             <div className={styles.logo}>
               {product.image && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_DOMAIN}${product.image}`}
+                  src={`http://localhost:3000/${product.image}`}
                   alt={product.title}
                   width={70}
                   height={70}

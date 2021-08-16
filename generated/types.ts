@@ -169,6 +169,7 @@ export type Product = {
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   reviewAvg: Scalars['Float'];
+  firstCategory: TopLevelCategory;
 };
 
 export type ProductCharacteristic = {

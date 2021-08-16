@@ -24,8 +24,12 @@ export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
     });
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key == "Enter") {
+  const handleSearch = (e: any, btn?: boolean) => {
+    if (e?.key == "Enter") {
+      goToSearch();
+    }
+    if(btn) {
+      e.preventDefault();
       goToSearch();
     }
   };
@@ -37,12 +41,12 @@ export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
         placeholder="Поиск..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleSearch}
       />
       <Button
         appearance="primary"
         className={styles.button}
-        onClick={goToSearch}
+        onClick={(e) => handleSearch(e, true)}
         aria-label="Искать по сайту"
       >
         <ReactSVG src={GlassIcon.src} />

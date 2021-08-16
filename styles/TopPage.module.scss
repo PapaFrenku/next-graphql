@@ -1,0 +1,99 @@
+.pageTitle {
+    color: var(--black);
+    margin: 0;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 35px;
+}
+
+.head {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    -moz-box-align: center;
+    align-items: center;
+    margin-bottom: 10px;
+    grid-gap: 0 20px;
+    gap: 0 20px;
+
+    justify-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.table {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+.table_head {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.table_row {
+    width: 100%;
+    display: flex;
+    margin-bottom: 5px;
+    padding: 3px 10px;
+}
+
+.table_cel {
+    box-sizing: border-box;
+    -moz-box-flex: 1;
+    flex-grow: 1;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.table_middleCell {
+    width: 20%;
+}
+
+.table_tinyCell {
+    width: 5%;
+    font-weight: 500;
+}
+
+.table_microCell {
+    width: 2%;
+    font-weight: 500;
+}
+
+.card {
+    border-radius: 5px;
+    background: var(--white);
+    -webkit-box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
+    box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
+}
+
+.table_title {
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.table_cel_content {
+    color: var(--black);
+}
+
+.cardProductInfo {
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--gray-dark);
+    margin-top: 5px;
+}
+
+.tagPopular {
+    background: #bf49bb !important;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #fff !important;
+}
+
+.tagCheap {
+    background: #82ffa3 !important;
+}

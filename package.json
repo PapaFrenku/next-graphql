@@ -12,8 +12,10 @@
   "dependencies": {
     "@apollo/client": "^3.3.21",
     "@reduxjs/toolkit": "^1.6.1",
+    "@types/apollo-upload-client": "^14.1.0",
     "@zeit/next-sass": "^1.0.1",
     "apollo-link-ws": "^1.0.20",
+    "apollo-upload-client": "^16.0.0",
     "classnames": "^2.3.1",
     "date-fns": "^2.22.1",
     "deepmerge": "^4.2.2",

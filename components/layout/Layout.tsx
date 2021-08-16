@@ -12,6 +12,33 @@ import { Sidebar } from "./Sidebar";
 import { AppContextProvider, IAppContext } from "../../context/app.context";
 import { Up } from "../Up";
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
+
+const pageTransition = {
+  type: "tween",
+  ease: "anticipate",
+  duration: 0.1,
+};
+
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    scale: 0.8,
+  },
+  in: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+  },
+  out: {
+    opacity: 0,
+    scale: 1
+  },
+};
+
+const pageStyle = {
+  position: "absolute",
+};
 
 export interface LayoutProps {
   children: ReactNode;
@@ -31,7 +58,15 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      // style={{ position: "absolute" }}
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      className={styles.wrapper}
+    >
       <a
         onFocus={() => setIsSkipLinkDisplayed(true)}
         tabIndex={0}
@@ -49,7 +84,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       </main>
       {/* <Footer className={styles.footer} /> */}
       <Up />
-    </div>
+    </motion.div>
   );
 };
 
