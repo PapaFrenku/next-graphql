@@ -5,6 +5,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
+import { uniqBy } from "lodash";
 import { SortEnum } from "../components/Sort";
 import { TopLevelCategory, TopPageEntity } from "../generated/types";
 import topPageService, { TopPageByAlias } from "../services/topPageService";
@@ -44,7 +45,8 @@ export const getAllTopPages = createAsyncThunk(
   "topPage/getAllTopPages",
   async () => {
     const res = await topPageService.getAllTopPages();
-    return res;
+    
+    return uniqBy(res, 'id');
   }
 );
 
