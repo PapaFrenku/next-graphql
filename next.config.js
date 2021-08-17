@@ -12,10 +12,7 @@ module.exports = withImages();
 
 module.exports = {
   reactStrictMode: true,
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')], 
-  },
   images: {
-    domains: ['localhost'],
+    domains: ['https://nest-graphql-prisma.herokuapp.com/'],
   }
 };

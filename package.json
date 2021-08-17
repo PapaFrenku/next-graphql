@@ -13,6 +13,7 @@
     "@apollo/client": "^3.3.21",
     "@reduxjs/toolkit": "^1.6.1",
     "@types/apollo-upload-client": "^14.1.0",
+    "@types/redux-devtools-extension": "^2.13.2",
     "@zeit/next-sass": "^1.0.1",
     "apollo-link-ws": "^1.0.20",
     "apollo-upload-client": "^16.0.0",
@@ -28,7 +29,8 @@
     "react-hook-form": "^7.11.1",
     "react-redux": "^7.2.4",
     "react-svg": "^14.0.5",
-    "sass": "^1.35.2"
+    "sass": "^1.35.2",
+    "ts-invariant": "^0.9.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.7",
@@ -60,5 +62,7 @@
       "eslint '*/**/*.{ts,tsx}' --fix --debug"
     ]
   },
-  "cacheDirectories": [".next/cache"]
+  "cacheDirectories": [
+    ".next/cache"
+  ]
 }
