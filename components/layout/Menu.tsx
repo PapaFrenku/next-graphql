@@ -70,7 +70,7 @@ const Accordion: React.FC<{
         >
           <div>
             {icon}
-            <Link href={`/allCategories/${i.toLowerCase()}`}>{title}</Link>
+            <span>{title}</span>
           </div>
           <motion.div
             initial={false}
